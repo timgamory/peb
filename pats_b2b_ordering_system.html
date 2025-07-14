@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pat's Exotic Beverages - B2B Order Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Login Screen Styles */
+        .login-container {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .login-subtitle {
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, #e17055, #d63031);
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .demo-credentials {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .demo-credentials h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .demo-credentials p {
+            margin: 5px 0;
+            color: #424242;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #bee5eb;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .user-details {
+            font-size: 14px;
+        }
+
+        /* Main Form Styles (same as before) */
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            border: 1px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 25px;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .products-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .products-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .products-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .quantity-input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .price {
+            font-weight: 600;
+            color: #27ae60;
+        }
+
+        .line-total {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .order-summary {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .total-row {
+            border-top: 2px solid rgba(255,255,255,0.3);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .order-notes {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .export-options {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container, .login-container {
+                padding: 20px;
+            }
+            
+            .login-form {
+                padding: 30px 20px;
+            }
+            
+            .products-table {
+                font-size: 14px;
+            }
+            
+            .quantity-input {
+                width: 60px;
+            }
+
+            .logout-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 15px;
+            }
+
+            .user-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen">
+            <div class="header">
+                <h1>Pat's Exotic Beverages</h1>
+                <p>B2B Order Portal - Premium Exotic Juices & Beverages</p>
+            </div>
+
+            <div class="login-container">
+                <div class="login-form">
+                    <h2 class="login-title">Welcome Back</h2>
+                    <p class="login-subtitle">Please sign in to access your B2B ordering portal</p>
+                    
+                    <div class="error-message" id="loginError">
+                        Invalid email or password. Please try again.
+                    </div>
+
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Business Email</label>
+                            <input type="email" id="loginEmail" name="loginEmail" required 
+                                   placeholder="your.business@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="loginPassword" required 
+                                   placeholder="Enter your password">
+                        </div>
+                        
+                        <button type="submit" class="btn">Sign In</button>
+                    </form>
+
+                    <div class="forgot-password">
+                        <a href="#" onclick="showForgotPassword()">Forgot your password?</a>
+                    </div>
+
+                    <!-- Demo Credentials Box -->
+                    <div class="demo-credentials">
+                        <h4>Demo Credentials</h4>
+                        <p><strong>Email:</strong> demo@brooklynbistro.com</p>
+                        <p><strong>Password:</strong> demo123</p>
+                        <p><em>Or try: wholesale@goldencrust.com / password: wholesale456</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application (hidden initially) -->
+        <div id="mainApp" class="hidden">
+            <div class="header">
+                <h1>Pat's Exotic Beverages</h1>
+                <p>B2B Order Portal - Premium Exotic Juices & Beverages</p>
+                <div class="user-info">
+                    <div class="user-details">
+                        <div>Welcome back, <span id="userBusinessName"></span></div>
+                        <div style="font-size: 12px; opacity: 0.8;">Account: <span id="userEmail"></span></div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Sign Out</button>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <div class="welcome-message">
+                    <strong>Welcome to your B2B ordering portal!</strong> Your account information has been pre-filled based on your profile. Please review and place your order below.
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    Order submitted successfully! You will receive a confirmation email shortly.
+                </div>
+
+                <form id="orderForm">
+                    <!-- Customer Information Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Customer Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerName">Business Name *</label>
+                                <input type="text" id="customerName" name="customerName" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPerson">Contact Person *</label>
+                                <input type="text" id="contactPerson" name="contactPerson" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Information Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Delivery Information</h2>
+                        <div class="form-group">
+                            <label for="deliveryAddress">Delivery Address *</label>
+                            <textarea id="deliveryAddress" name="deliveryAddress" rows="3" required placeholder="Please include full street address, city, state, and ZIP code"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="preferredDeliveryDate">Preferred Delivery Date</label>
+                                <input type="date" id="preferredDeliveryDate" name="preferredDeliveryDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryInstructions">Delivery Instructions</label>
+                                <input type="text" id="deliveryInstructions" name="deliveryInstructions" placeholder="Special delivery notes...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Selection Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Product Selection</h2>
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Order Notes Section -->
+                    <div class="form-section">
+                        <h2 class="section-title">Order Notes</h2>
+                        <div class="form-group">
+                            <label for="orderNotes">Additional Notes or Special Requests</label>
+                            <textarea id="orderNotes" name="orderNotes" class="order-notes" placeholder="Please include any special requests, billing instructions, or other relevant information..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h2 style="margin-bottom: 20px;">Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (8.5%):</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span>Total Amount:</span>
+                            <span id="totalAmount">$0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div class="export-options" id="exportOptions">
+                        <h3>Export Options</h3>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="exportQuickBooks" checked>
+                                <label for="exportQuickBooks">QuickBooks Format</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="exportPDF" checked>
+                                <label for="exportPDF">PDF Invoice</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="exportCSV">
+                                <label for="exportCSV">CSV Data</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="buttons-container">
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                        <button type="button" class="btn btn-export" onclick="toggleExportOptions()">Export Options</button>
+                        <button type="button" class="btn" onclick="submitOrder()">Submit Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User authentication and management
+        const users = {
+            'demo@brooklynbistro.com': {
+                password: 'demo123',
+                businessName: 'Brooklyn Bistro',
+                contactPerson: 'Sarah Martinez',
+                phone: '(718) 555-0123',
+                address: '123 Atlantic Ave\nBrooklyn, NY 11201',
+                customerType: 'restaurant',
+                discountRate: 0.15
+            },
+            'wholesale@goldencrust.com': {
+                password: 'wholesale456',
+                businessName: 'Golden Crust Bakery',
+                contactPerson: 'Michael Chen',
+                phone: '(516) 555-0789',
+                address: '456 Main Street\nGarden City, NY 11530',
+                customerType: 'bakery',
+                discountRate: 0.10
+            },
+            'orders@hamptonhotel.com': {
+                password: 'hamptons789',
+                businessName: 'Hampton Resort & Spa',
+                contactPerson: 'Jennifer Walsh',
+                phone: '(631) 555-0456',
+                address: '789 Ocean Drive\nEast Hampton, NY 11937',
+                customerType: 'hotel',
+                discountRate: 0.20
+            }
+        };
+
+        let currentUser = null;
+
+        // Product data with tiered pricing
+        const products = [
+            { id: 'mango-passion', name: 'Mango Passion Fruit Juice (12 oz)', basePrice: 3.99 },
+            { id: 'dragon-fruit', name: 'Dragon Fruit Blend (12 oz)', basePrice: 4.49 },
+            { id: 'acai-berry', name: 'Acai Berry Supreme (12 oz)', basePrice: 4.99 },
+            { id: 'lychee-lime', name: 'Lychee Lime Fusion (12 oz)', basePrice: 4.29 },
+            { id: 'papaya-mint', name: 'Papaya Mint Refresher (12 oz)', basePrice: 3.79 },
+            { id: 'guava-ginger', name: 'Guava Ginger Kick (12 oz)', basePrice: 4.19 },
+            { id: 'passion-coconut', name: 'Passion Fruit Coconut (12 oz)', basePrice: 4.39 },
+            { id: 'exotic-mix', name: 'Exotic Mix 6-Pack Bundle', basePrice: 23.99 },
+            { id: 'premium-sampler', name: 'Premium Sampler 12-Pack', basePrice: 47.99 },
+            { id: 'bulk-case', name: 'Bulk Case (24 units - Mixed)', basePrice: 89.99 }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            checkExistingSession();
+        });
+
+        function checkExistingSession() {
+            const savedUser = localStorage.getItem('patsB2BUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMainApp();
+            } else {
+                showLoginScreen();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            // Check credentials
+            if (users[email] && users[email].password === password) {
+                // Successful login
+                currentUser = {
+                    email: email,
+                    ...users[email]
+                };
+                
+                // Save session
+                localStorage.setItem('patsB2BUser', JSON.stringify(currentUser));
+                
+                // Hide error and show main app
+                errorDiv.style.display = 'none';
+                showMainApp();
+            } else {
+                // Failed login
+                errorDiv.style.display = 'block';
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+        }
+
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // Populate user information
+            populateUserInfo();
+            populateProductsTable();
+            setMinDate();
+        }
+
+        function populateUserInfo() {
+            if (!currentUser) return;
+            
+            // Update header
+            document.getElementById('userBusinessName').textContent = currentUser.businessName;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            
+            // Pre-fill form fields
+            document.getElementById('customerName').value = currentUser.businessName;
+            document.getElementById('contactPerson').value = currentUser.contactPerson;
+            document.getElementById('email').value = currentUser.email;
+            document.getElementById('phone').value = currentUser.phone;
+            document.getElementById('deliveryAddress').value = currentUser.address;
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to sign out?')) {
+                currentUser = null;
+                localStorage.removeItem('patsB2BUser');
+                localStorage.removeItem('patsOrderDraft');
+                
+                // Clear forms
+                document.getElementById('loginForm').reset();
+                document.getElementById('orderForm').reset();
+                
+                // Reset products table
+                products.forEach(product => {
+                    const qtyInput = document.getElementById(`qty-${product.id}`);
+                    if (qtyInput) {
+                        qtyInput.value = 0;
+                        calculateLineTotal(product.id);
+                    }
+                });
+                
+                showLoginScreen();
+            }
+        }
+
+        function showForgotPassword() {
+            alert('Please contact Pat\'s Exotic Beverages at (555) 123-4567 or support@patsexoticbeverages.com to reset your password.');
+        }
+
+        function getCustomerPrice(basePrice) {
+            if (!currentUser || !currentUser.discountRate) {
+                return basePrice;
+            }
+            return basePrice * (1 - currentUser.discountRate);
+        }
+
+        function populateProductsTable() {
+            const tableBody = document.getElementById('productsTableBody');
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                const customerPrice = getCustomerPrice(product.basePrice);
+                const row = document.createElement('tr');
+                row.className = 'product-row';
+                row.innerHTML = `
+                    <td>
+                        <strong>${product.name}</strong>
+                        ${currentUser && currentUser.discountRate ? 
+                            `<br><small style="color: #27ae60;">Your ${(currentUser.discountRate * 100)}% discount applied!</small>` : 
+                            ''}
+                    </td>
+                    <td class="price">$${customerPrice.toFixed(2)}</td>
+                    <td>
+                        <input type="number" 
+                               class="quantity-input" 
+                               id="qty-${product.id}" 
+                               min="0" 
+                               value="0" 
+                               onchange="calculateLineTotal('${product.id}')"
+                               oninput="calculateLineTotal('${product.id}')">
+                    </td>
+                    <td class="line-total" id="total-${product.id}">$0.00</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function calculateLineTotal(productId) {
+            const product = products.find(p => p.id === productId);
+            const customerPrice = getCustomerPrice(product.basePrice);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value) || 0;
+            const lineTotal = customerPrice * quantity;
+            
+            document.getElementById(`total-${productId}`).textContent = `$${lineTotal.toFixed(2)}`;
+            calculateOrderTotal();
+        }
+
+        function calculateOrderTotal() {
+            let subtotal = 0;
+            
+            products.forEach(product => {
+                const quantity = parseInt(document.getElementById(`qty-${product.id}`).value) || 0;
+                const customerPrice = getCustomerPrice(product.basePrice);
+                subtotal += customerPrice * quantity;
+            });
+            
+            const tax = subtotal * 0.085; // 8.5% tax rate
+            const total = subtotal + tax;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function setMinDate() {
+            const today = new Date();
+            today.setDate(today.getDate() + 1); // Next day minimum
+            const minDate = today.toISOString().split('T')[0];
+            document.getElementById('preferredDeliveryDate').setAttribute('min', minDate);
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all order data? Customer information will be preserved.')) {
+                // Clear only the order-specific fields, not customer info
+                products.forEach(product => {
+                    document.getElementById(`qty-${product.id}`).value = 0;
+                    document.getElementById(`total-${product.id}`).textContent = '$0.00';
+                });
+                document.getElementById('deliveryInstructions').value = '';
+                document.getElementById('preferredDeliveryDate').value = '';
+                document.getElementById('orderNotes').value = '';
+                calculateOrderTotal();
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('exportOptions').style.display = 'none';
+            }
+        }
+
+        function toggleExportOptions() {
+            const exportDiv = document.getElementById('exportOptions');
+            exportDiv.style.display = exportDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitOrder() {
+            // Validate required fields
+            const requiredFields = ['customerName', 'contactPerson', 'email', 'phone', 'deliveryAddress'];
+            const missingFields = [];
+            
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (!element.value.trim()) {
+                    missingFields.push(element.previousElementSibling.textContent.replace(' *', ''));
+                }
+            });
+            
+            if (missingFields.length > 0) {
+                alert(`Please fill in the following required fields:\n- ${missingFields.join('\n- ')}`);
+                return;
+            }
+            
+            // Check if at least one product is ordered
+            let hasProducts = false;
+            products.forEach(product => {
+                const quantity = parseInt(document.getElementById(`qty-${product.id}`).value) || 0;
+                if (quantity > 0) hasProducts = true;
+            });
+            
+            if (!hasProducts) {
+                alert('Please select at least one product with a quantity greater than 0.');
+                return;
+            }
+            
+            // Collect order data
+            const orderData = collectOrderData();
+            
+            // Simulate order submission
+            processOrder(orderData);
+        }
+
+        function collectOrderData() {
+            const orderData = {
+                customer: {
+                    businessName: document.getElementById('customerName').value,
+                    contactPerson: document.getElementById('contactPerson').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    customerType: currentUser.customerType,
+                    discountRate: currentUser.discountRate
+                },
+                delivery: {
+                    address: document.getElementById('deliveryAddress').value,
+                    preferredDate: document.getElementById('preferredDeliveryDate').value,
+                    instructions: document.getElementById('deliveryInstructions').value
+                },
+                items: [],
+                notes: document.getElementById('orderNotes').value,
+                orderDate: new Date().toISOString(),
+                orderNumber: 'PEB-' + Date.now(),
+                totals: {
+                    subtotal: 0,
+                    tax: 0,
+                    total: 0
+                }
+            };
+            
+            // Collect ordered items
+            products.forEach(product => {
+                const quantity = parseInt(document.getElementById(`qty-${product.id}`).value) || 0;
+                if (quantity > 0) {
+                    const customerPrice = getCustomerPrice(product.basePrice);
+                    const lineTotal = customerPrice * quantity;
+                    orderData.items.push({
+                        productId: product.id,
+                        name: product.name,
+                        basePrice: product.basePrice,
+                        customerPrice: customerPrice,
+                        quantity: quantity,
+                        lineTotal: lineTotal
+                    });
+                    orderData.totals.subtotal += lineTotal;
+                }
+            });
+            
+            orderData.totals.tax = orderData.totals.subtotal * 0.085;
+            orderData.totals.total = orderData.totals.subtotal + orderData.totals.tax;
+            
+            return orderData;
+        }
+
+        function processOrder(orderData) {
+            // In a real application, this would send data to your server
+            console.log('Order Data:', orderData);
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // Generate exports based on selected options
+            if (document.getElementById('exportQuickBooks').checked) {
+                generateQuickBooksExport(orderData);
+            }
+            
+            if (document.getElementById('exportPDF').checked) {
+                generatePDFInvoice(orderData);
+            }
+            
+            if (document.getElementById('exportCSV').checked) {
+                generateCSVExport(orderData);
+            }
+            
+            // In a real application, you would also:
+            // 1. Send email confirmation to customer
+            // 2. Send notification to sales team
+            // 3. Create entry in QuickBooks via API
+            // 4. Update inventory if applicable
+        }
+
+        function generateQuickBooksExport(orderData) {
+            // This would generate a QuickBooks-compatible format
+            const qbData = {
+                TransactionType: 'Invoice',
+                CustomerName: orderData.customer.businessName,
+                Email: orderData.customer.email,
+                BillingAddress: orderData.delivery.address,
+                Date: new Date(orderData.orderDate).toLocaleDateString(),
+                DueDate: new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)).toLocaleDateString(), // 30 days
+                Items: orderData.items.map(item => ({
+                    ItemName: item.name,
+                    Quantity: item.quantity,
+                    Rate: item.customerPrice,
+                    Amount: item.lineTotal
+                })),
+                Subtotal: orderData.totals.subtotal,
+                Tax: orderData.totals.tax,
+                Total: orderData.totals.total,
+                Memo: orderData.notes,
+                CustomerType: orderData.customer.customerType,
+                DiscountApplied: orderData.customer.discountRate
+            };
+            
+            console.log('QuickBooks Export:', qbData);
+            alert('QuickBooks export data generated! Check console for details.');
+        }
+
+        function generatePDFInvoice(orderData) {
+            // This would generate a PDF invoice
+            console.log('PDF Invoice generated for:', orderData.orderNumber);
+            alert(`PDF Invoice generated for order ${orderData.orderNumber}!`);
+        }
+
+        function generateCSVExport(orderData) {
+            // Generate CSV format
+            let csv = 'Order Number,Customer,Contact,Email,Product,Quantity,Base Price,Customer Price,Line Total\n';
+            
+            orderData.items.forEach(item => {
+                csv += `${orderData.orderNumber},${orderData.customer.businessName},${orderData.customer.contactPerson},${orderData.customer.email},${item.name},${item.quantity},${item.basePrice},${item.customerPrice},${item.lineTotal}\n`;
+            });
+            
+            console.log('CSV Export:', csv);
+            alert('CSV export data generated! Check console for details.');
+        }
+
+        // Auto-save functionality (optional)
+        function autoSave() {
+            if (!currentUser) return;
+            
+            const formData = new FormData(document.getElementById('orderForm'));
+            const savedData = {
+                userEmail: currentUser.email
+            };
+            
+            for (let [key, value] of formData.entries()) {
+                savedData[key] = value;
+            }
+            
+            // Add quantities
+            products.forEach(product => {
+                const qtyElement = document.getElementById(`qty-${product.id}`);
+                if (qtyElement) {
+                    savedData[`qty-${product.id}`] = qtyElement.value;
+                }
+            });
+            
+            localStorage.setItem('patsOrderDraft', JSON.stringify(savedData));
+        }
+
+        // Load saved draft (optional)
+        function loadSavedDraft() {
+            if (!currentUser) return;
+            
+            const savedData = localStorage.getItem('patsOrderDraft');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Only load if it's for the current user
+                if (data.userEmail !== currentUser.email) return;
+                
+                Object.keys(data).forEach(key => {
+                    if (key === 'userEmail') return;
+                    
+                    const element = document.getElementById(key);
+                    if (element && !element.readOnly) {
+                        element.value = data[key];
+                        if (key.startsWith('qty-')) {
+                            const productId = key.replace('qty-', '');
+                            calculateLineTotal(productId);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Set up auto-save every 30 seconds
+        setInterval(autoSave, 30000);
+        
+        // Load saved draft when main app is shown
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // Populate user information
+            populateUserInfo();
+            populateProductsTable();
+            setMinDate();
+            
+            // Load any saved draft
+            setTimeout(loadSavedDraft, 100);
+        }
+    </script>
+</body>
+</html>
